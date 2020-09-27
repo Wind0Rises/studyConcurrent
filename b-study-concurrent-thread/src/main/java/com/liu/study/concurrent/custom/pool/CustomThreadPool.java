@@ -1,5 +1,7 @@
 package com.liu.study.concurrent.custom.pool;
 
+import java.util.concurrent.ArrayBlockingQueue;
+
 /**
  *
  *
@@ -9,8 +11,7 @@ package com.liu.study.concurrent.custom.pool;
  */
 public class CustomThreadPool implements CustomExecutor {
 
-
-
+    private ArrayBlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(8);
 
     @Override
     public void execut(Runnable runnable) {
