@@ -3,7 +3,6 @@ package com.liu.study.concurrent.module;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 /**
  * CyclicBarrier：比如一个小组有六个人，这六个做一件事，把这一件事拆分成六个任务，只有没有人的任务都完成以后，这件事
@@ -11,6 +10,7 @@ import java.util.stream.IntStream;
  *                如果没有某一或者几个比较牛逼，提前把自己的任务做完了，那么她必须要等待，调用cyclicBarrier#await()等待其他
  *                做的比较慢的人。
  *
+ *                也就是说，任务最慢的那个决定了整个事情最后结束时间。
  * @author lwa
  * @version 1.0.0
  * @createTime 2020/12/27 14:25
@@ -42,8 +42,14 @@ public class CyclicBarrierDemo {
      * @param args
      */
     public static void main(String[] args) {
+        /**
+         * 无回调的CyclicBarrier。
+         */
         // commonUseMethod();
 
+        /**
+         * 有回调的CyclicBarrier
+         */
         hasCallbackCyclicBarrier();
     }
 
@@ -103,14 +109,4 @@ public class CyclicBarrierDemo {
             }
         }, "做任务B的人").start();
     }
-
-
-    class TestRunnable implements Runnable {
-
-        @Override
-        public void run() {
-            // cyclicBarrier.
-        }
-    }
-
 }
