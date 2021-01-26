@@ -126,10 +126,36 @@ public class AQSExclusiveDemo {
     }
 
     /**
-     *
+     * TODO：未做仔细的测试。
      */
     private static void exclusiveSynInterruptible() throws Exception {
         CustomSyn customSyn = new CustomSyn();
+
+        new Thread(() -> {
+            try {
+                customSyn.acquireInterruptibly(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + "-- 加锁成功，执行同步代码");
+        }, "线程一").start();
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    private static void exclusiveSynAcquireNanos() throws Exception {
+        CustomSyn customSyn = new CustomSyn();
+
+        new Thread(() -> {
+            try {
+                customSyn.tryAcquireNanos(1, 1000000000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + "-- 加锁成功，执行同步代码");
+        }, "线程一").start();
     }
 
 }
