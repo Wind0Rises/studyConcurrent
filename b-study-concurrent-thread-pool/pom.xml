@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.liu.study.concurrent</groupId>
-    <artifactId>b-study-concurrent-thread</artifactId>
+    <artifactId>b-study-concurrent-thread-pool</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <name>b-study-concurrent-thread</name>

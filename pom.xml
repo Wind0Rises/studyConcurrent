@@ -28,7 +28,7 @@
 
     <modules>
         <module>a-study-concurrent-common</module>
-        <module>b-study-concurrent-thread</module>
+        <module>b-study-concurrent-thread-pool</module>
         <module>c-study-concurrent-framework</module>
         <module>d-study-concurrent-atomic</module>
         <module>e-study-concurrent-module</module>

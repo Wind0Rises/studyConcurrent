@@ -4,6 +4,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * 读写锁。
+ *
+ * 只有读读可以直接获取到锁。
+ * 读写、写写、写读：都是无法获取到锁的。
+ *
  * @author lwa
  * @version 1.0.0
  * @createTime 2021/1/26 16:42
