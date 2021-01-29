@@ -12,7 +12,7 @@ public interface CustomExecutor {
      *
      * @param runnable
      */
-    public void execut(Runnable runnable);
+    public void execute(Runnable runnable);
 
 
 

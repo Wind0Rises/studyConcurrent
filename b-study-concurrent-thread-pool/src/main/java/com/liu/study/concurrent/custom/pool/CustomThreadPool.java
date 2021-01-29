@@ -3,7 +3,7 @@ package com.liu.study.concurrent.custom.pool;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
- *
+ * 自定义线程池。手写线程池。。
  *
  * @author lwa
  * @version 1.0.0
@@ -14,7 +14,7 @@ public class CustomThreadPool implements CustomExecutor {
     private ArrayBlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(8);
 
     @Override
-    public void execut(Runnable runnable) {
+    public void execute(Runnable runnable) {
 
     }
 }
