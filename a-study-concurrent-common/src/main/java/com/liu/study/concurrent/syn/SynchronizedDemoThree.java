@@ -18,16 +18,29 @@ public class SynchronizedDemoThree {
      *
      * 无锁  ->  偏向锁   ->  轻量级锁  ->   重量级锁
      *
+     *
+     *
+     * <note>
+     *      101：偏向锁。        保存着线程ID.
+     *      001：无锁。          保存着hashcode。
+     *
+     *      如果保存着HashCode，就不能保存线程ID，就不能从001 -> 101。
+     *      只可能从 001 -> 00从无锁到轻量级锁。
+     *      或者是从
+     * </note>
+     *
      * @param args
      */
     public static void main(String[] args) throws Exception {
         /**
          * 无锁
+         *
+         * 需要计算一下HashCode。就能获取到无锁。
          */
         // noLock();
 
         /**
-         * 偏向锁
+         * 偏向锁：
          */
         deviationLock();
 
@@ -47,6 +60,8 @@ public class SynchronizedDemoThree {
      *
      * 是否是偏向锁     锁标准位
      *      0          01
+     *
+     *
      */
     public static void noLock() {
         ThreeObject threeObject = new ThreeObject();
@@ -67,35 +82,39 @@ public class SynchronizedDemoThree {
      * 是否是偏向锁     锁标准位
      *      0
      *
-     * -XX:+UseBiasedLocking：
+     * -XX:+UseBiasedLocking
+     *
+     * java8:打开了偏向锁延迟开启，默认为4秒
      * -XX:BiasedLockingStartupDelay=0
      */
     public static void deviationLock() throws InterruptedException {
-
-        Thread.sleep(10000);
         ThreeObject threeObject = new ThreeObject();
         // System.out.println(threeObject.hashCode()); // 这个放开就有问题？就不是偏向锁，就是无锁状态了？？为什么？？？
+        // 因为保存了hashcode就不能保存线程ID了.
         System.out.println(ClassLayout.parseInstance(threeObject).toPrintable());
 
     }
 
     /**
-     * 轻量级锁
+     * 轻量级锁：
+     *
      */
     public static void lightLock() {
         ThreeObject threeObject = new ThreeObject();
+        // 开启下一行，就是无锁 -> 轻量级锁。如果不开启，就是偏向锁 ->  轻量级锁。
         System.out.println("十六进制hashcode： " + Integer.toHexString(threeObject.hashCode()));
         System.out.println(ClassLayout.parseInstance(threeObject).toPrintable());
         System.out.println("线程ID：" + Thread.currentThread().getId());
 
         synchronized (threeObject) {
-            System.out.println("十六进制hashcode： " + Integer.toHexString(threeObject.hashCode()));
-            System.out.println(ClassLayout.parseInstance(threeObject).toPrintable());
+
         }
 
-        System.out.println("------------------   执行完成以后 撤销锁  -------------------------");
-        System.out.println("十六进制hashcode： " + Integer.toHexString(threeObject.hashCode()));
-        System.out.println(ClassLayout.parseInstance(threeObject).toPrintable());
+        new Thread(() -> {
+            synchronized (threeObject) {
+                System.out.println(ClassLayout.parseInstance(threeObject).toPrintable());
+            }
+        }).start();
     }
 
 
@@ -119,6 +138,9 @@ public class SynchronizedDemoThree {
             }).start();
         }
     }
+
+
+
 
 
 
